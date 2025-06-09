@@ -13,7 +13,7 @@ const Navbar = () => {
     { name: 'Bandwidth Marketplace', href: '/marketplace', icon: TrendingUp },
     { name: 'Data Mining', href: '/data-mining', icon: Shield },
     { name: 'Profile', href: '/profile', icon: User },
-    { name: 'Activity History', href: '/activity', icon: Clock },
+    { name: 'DAO Governance', href: '/dao-governance', icon: Clock },
   ];
 
   return (
