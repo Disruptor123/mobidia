@@ -47,17 +47,21 @@ const Features = () => {
     <section id="features" className="py-20 px-4">
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent animate-fade-in">
             Revolutionary Features
           </h2>
-          <p className="text-xl text-white/80 max-w-3xl mx-auto">
+          <p className="text-xl text-white/80 max-w-3xl mx-auto animate-fade-in" style={{animationDelay: '0.2s'}}>
             Experience the future of mobile data with our cutting-edge blockchain technology
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <Card key={index} className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/10 transition-all duration-300 group">
+            <Card 
+              key={index} 
+              className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/10 transition-all duration-300 group animate-fade-in" 
+              style={{animationDelay: `${index * 0.1}s`}}
+            >
               <CardContent className="p-6">
                 <div className="flex items-center mb-4">
                   <div className={`p-3 rounded-lg bg-white/10 ${feature.color} group-hover:scale-110 transition-transform`}>

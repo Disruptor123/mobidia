@@ -44,12 +44,12 @@ const AnimatedBackground = () => {
         {[...Array(12)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-blue-400 rounded-full opacity-60"
+            className="absolute w-2 h-2 bg-blue-400 rounded-full opacity-60 animate-float"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animation: `float${i % 3} ${3 + Math.random() * 2}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 2}s`
+              animationDelay: `${Math.random() * 2}s`,
+              animationDuration: `${3 + Math.random() * 2}s`
             }}
           />
         ))}
@@ -61,9 +61,8 @@ const AnimatedBackground = () => {
           {[...Array(6)].map((_, i) => (
             <div
               key={i}
-              className="w-8 h-8 border border-purple-400 bg-purple-400/10"
+              className="w-8 h-8 border border-purple-400 bg-purple-400/10 animate-pulse"
               style={{
-                animation: `slideDown 2s ease-in-out infinite`,
                 animationDelay: `${i * 0.3}s`
               }}
             />
@@ -77,9 +76,8 @@ const AnimatedBackground = () => {
           {[...Array(32)].map((_, i) => (
             <div
               key={i}
-              className="w-1 h-1 bg-cyan-400 rounded-full"
+              className="w-1 h-1 bg-cyan-400 rounded-full animate-pulse"
               style={{
-                animation: `pulse 2s ease-in-out infinite`,
                 animationDelay: `${Math.random() * 2}s`
               }}
             />
@@ -93,41 +91,17 @@ const AnimatedBackground = () => {
           {[...Array(4)].map((_, i) => (
             <div
               key={i}
-              className="absolute border-2 border-green-400 rounded-full"
+              className="absolute border-2 border-green-400 rounded-full animate-ping"
               style={{
                 width: `${(i + 1) * 20}px`,
                 height: `${(i + 1) * 20}px`,
-                animation: `ripple 3s ease-out infinite`,
-                animationDelay: `${i * 0.5}s`
+                animationDelay: `${i * 0.5}s`,
+                animationDuration: '3s'
               }}
             />
           ))}
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes float0 {
-          0%, 100% { transform: translateY(0px) translateX(0px); }
-          50% { transform: translateY(-20px) translateX(10px); }
-        }
-        @keyframes float1 {
-          0%, 100% { transform: translateY(0px) translateX(0px); }
-          50% { transform: translateY(-15px) translateX(-10px); }
-        }
-        @keyframes float2 {
-          0%, 100% { transform: translateY(0px) translateX(0px); }
-          50% { transform: translateY(-25px) translateX(5px); }
-        }
-        @keyframes slideDown {
-          0% { transform: translateY(-10px); opacity: 0; }
-          50% { opacity: 1; }
-          100% { transform: translateY(10px); opacity: 0; }
-        }
-        @keyframes ripple {
-          0% { transform: scale(0); opacity: 1; }
-          100% { transform: scale(1); opacity: 0; }
-        }
-      `}</style>
     </div>
   );
 };
