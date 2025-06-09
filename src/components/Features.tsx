@@ -67,9 +67,9 @@ const Features = () => {
                   <div className={`p-3 rounded-lg bg-white/10 ${feature.color} group-hover:scale-110 transition-transform`}>
                     <feature.icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-semibold text-white ml-4">{feature.title}</h3>
+                  <h3 className="text-xl font-semibold text-white ml-4 animate-fade-in" style={{animationDelay: `${index * 0.1 + 0.1}s`}}>{feature.title}</h3>
                 </div>
-                <p className="text-white/70 leading-relaxed">{feature.description}</p>
+                <p className="text-white/70 leading-relaxed animate-fade-in" style={{animationDelay: `${index * 0.1 + 0.2}s`}}>{feature.description}</p>
               </CardContent>
             </Card>
           ))}
