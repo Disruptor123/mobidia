@@ -16,6 +16,10 @@ const Navbar = () => {
     { name: 'DAO Governance', href: '/dao-governance', icon: Clock },
   ];
 
+  const handleConnectWallet = () => {
+    console.log("Connect Wallet clicked");
+  };
+
   return (
     <nav className="bg-black/20 backdrop-blur-md border-b border-white/10 sticky top-0 z-50">
       <div className="container mx-auto px-4">
@@ -55,8 +59,11 @@ const Navbar = () => {
 
           {/* Connect Wallet Button */}
           <div className="hidden md:block">
-            <Button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0">
-              Connected: 0x1234...5678
+            <Button 
+              onClick={handleConnectWallet}
+              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0"
+            >
+              Connect Wallet
             </Button>
           </div>
 
@@ -92,8 +99,11 @@ const Navbar = () => {
                   </Link>
                 );
               })}
-              <Button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 mt-4">
-                Connected: 0x1234...5678
+              <Button 
+                onClick={handleConnectWallet}
+                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 mt-4"
+              >
+                Connect Wallet
               </Button>
             </div>
           </div>
