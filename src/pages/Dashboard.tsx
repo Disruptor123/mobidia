@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Wifi, TrendingUp, Coins, Users, Play, Pause, ArrowUpRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -47,13 +46,28 @@ const Dashboard = () => {
     window.location.href = '/dao-governance';
   };
 
+  const handleConnectWallet = () => {
+    toast({
+      title: "Connect Wallet",
+      description: "Wallet connection functionality to be implemented",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <Navbar />
       <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2 animate-fade-in">Dashboard</h1>
-          <p className="text-white/70 animate-fade-in" style={{animationDelay: '0.1s'}}>Manage your bandwidth and earnings</p>
+        <div className="mb-8 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-white mb-2 animate-fade-in">Dashboard</h1>
+            <p className="text-white/70 animate-fade-in" style={{animationDelay: '0.1s'}}>Manage your bandwidth and earnings</p>
+          </div>
+          <Button 
+            onClick={handleConnectWallet}
+            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+          >
+            Connect Wallet
+          </Button>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
