@@ -46,11 +46,10 @@ const Dashboard = () => {
     window.location.href = '/dao-governance';
   };
 
+  // TODO: Configure wallet connection logic here
   const handleConnectWallet = () => {
-    toast({
-      title: "Connect Wallet",
-      description: "Wallet connection functionality to be implemented",
-    });
+    console.log("Connect Wallet clicked - configure wallet integration here");
+    // Add your wallet connection logic here (e.g., MetaMask, WalletConnect, etc.)
   };
 
   return (
@@ -62,6 +61,7 @@ const Dashboard = () => {
             <h1 className="text-3xl font-bold text-white mb-2 animate-fade-in">Dashboard</h1>
             <p className="text-white/70 animate-fade-in" style={{animationDelay: '0.1s'}}>Manage your bandwidth and earnings</p>
           </div>
+          {/* Connect Wallet Button - TODO: Configure wallet integration */}
           <Button 
             onClick={handleConnectWallet}
             className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"

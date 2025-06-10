@@ -1,10 +1,22 @@
-
 import React from 'react';
 import { ArrowRight, Zap, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 const Hero = () => {
+  // TODO: Configure wallet connection logic here
+  const handleLaunchApp = () => {
+    console.log("Launch App clicked - configure wallet integration here");
+    // Add wallet connection logic here before redirecting to dashboard
+    window.location.href = '/dashboard';
+  };
+
+  // TODO: Configure wallet connection logic here  
+  const handleConnectWallet = () => {
+    console.log("Connect Wallet clicked - configure wallet integration here");
+    // Add wallet connection logic here
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
       <div className="container mx-auto max-w-6xl text-center relative z-10">
@@ -29,12 +41,15 @@ const Hero = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 animate-fade-in" style={{animationDelay: '0.3s'}}>
-          <Link to="/dashboard">
-            <Button size="lg" className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 px-8 py-4 text-lg font-semibold">
-              Launch App
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-          </Link>
+          {/* Launch App Button - TODO: Configure wallet integration */}
+          <Button 
+            onClick={handleLaunchApp}
+            size="lg" 
+            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 px-8 py-4 text-lg font-semibold"
+          >
+            Launch App
+            <ArrowRight className="ml-2 w-5 h-5" />
+          </Button>
           <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg">
             Learn More
           </Button>

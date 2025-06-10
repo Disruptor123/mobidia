@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Menu, X, Wifi, Shield, TrendingUp, User, Clock, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -16,8 +15,10 @@ const Navbar = () => {
     { name: 'DAO Governance', href: '/dao-governance', icon: Clock },
   ];
 
+  // TODO: Configure wallet connection logic here
   const handleConnectWallet = () => {
-    console.log("Connect Wallet clicked");
+    console.log("Connect Wallet clicked - configure wallet integration here");
+    // Add your wallet connection logic here (e.g., MetaMask, WalletConnect, etc.)
   };
 
   return (
@@ -57,7 +58,7 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* Connect Wallet Button */}
+          {/* Connect Wallet Button - TODO: Configure wallet integration */}
           <div className="hidden md:block">
             <Button 
               onClick={handleConnectWallet}
@@ -99,6 +100,7 @@ const Navbar = () => {
                   </Link>
                 );
               })}
+              {/* Mobile Connect Wallet Button - TODO: Configure wallet integration */}
               <Button 
                 onClick={handleConnectWallet}
                 className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 mt-4"
