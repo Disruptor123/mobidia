@@ -6,19 +6,76 @@ import { Switch } from '@/components/ui/switch';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
+import { useToast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 
 const DataMining = () => {
   const [zkMiningEnabled, setZkMiningEnabled] = useState(true);
+  const [sessionDuration, setSessionDuration] = useState({ hours: 2, minutes: 34 });
+  const [proofsGenerated, setProofsGenerated] = useState(147);
+  const [earnings, setEarnings] = useState({ today: 12.5, week: 87.3, total: 324.7 });
   const [dataTypes, setDataTypes] = useState({
     location: true,
     usage: false,
     network: true,
     device: false
   });
+  const { toast } = useToast();
 
   const handleDataTypeChange = (type: string, checked: boolean) => {
     setDataTypes(prev => ({ ...prev, [type]: checked }));
+    toast({
+      title: "Data Sharing Updated",
+      description: `${type} data sharing ${checked ? 'enabled' : 'disabled'}`,
+    });
+  };
+
+  const handleToggleMining = () => {
+    setZkMiningEnabled(!zkMiningEnabled);
+    if (!zkMiningEnabled) {
+      // Starting mining
+      setSessionDuration({ hours: 0, minutes: 0 });
+      toast({
+        title: "ZK Mining Started",
+        description: "Data mining session has begun",
+      });
+    } else {
+      // Stopping mining
+      toast({
+        title: "ZK Mining Stopped",
+        description: "Data mining session has ended",
+      });
+    }
+  };
+
+  const handleClaimRewards = () => {
+    const dailyEarnings = earnings.today;
+    setEarnings(prev => ({ ...prev, today: 0, total: prev.total + dailyEarnings }));
+    toast({
+      title: "Rewards Claimed!",
+      description: `Successfully claimed ${dailyEarnings} MBD tokens`,
+    });
+  };
+
+  const handleViewAllProofs = () => {
+    toast({
+      title: "ZK Proofs Viewer",
+      description: "Opening detailed proofs viewer...",
+    });
+  };
+
+  const handleViewTerms = () => {
+    toast({
+      title: "DAO Terms",
+      description: "Opening DAO terms and conditions...",
+    });
+  };
+
+  const handleViewDisclosure = () => {
+    toast({
+      title: "Data Buyer Disclosure",
+      description: "Opening data buyer disclosure document...",
+    });
   };
 
   return (
@@ -55,17 +112,17 @@ const DataMining = () => {
               
               <div className="flex justify-between">
                 <span className="text-white/70">Session Duration:</span>
-                <span className="text-white">2h 34m</span>
+                <span className="text-white">{sessionDuration.hours}h {sessionDuration.minutes}m</span>
               </div>
               
               <div className="flex justify-between">
                 <span className="text-white/70">Proofs Generated:</span>
-                <span className="text-white">147</span>
+                <span className="text-white">{proofsGenerated}</span>
               </div>
               
               <Button 
                 className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700"
-                onClick={() => setZkMiningEnabled(!zkMiningEnabled)}
+                onClick={handleToggleMining}
               >
                 <Zap className="w-4 h-4 mr-2" />
                 {zkMiningEnabled ? 'Stop Mining' : 'Start Mining'}
@@ -83,22 +140,26 @@ const DataMining = () => {
             <div className="space-y-4">
               <div className="flex justify-between">
                 <span className="text-white/70">Today:</span>
-                <span className="text-white font-semibold">+12.5 MBD</span>
+                <span className="text-white font-semibold">+{earnings.today} MBD</span>
               </div>
               
               <div className="flex justify-between">
                 <span className="text-white/70">This Week:</span>
-                <span className="text-white font-semibold">+87.3 MBD</span>
+                <span className="text-white font-semibold">+{earnings.week} MBD</span>
               </div>
               
               <div className="flex justify-between">
                 <span className="text-white/70">Total Earned:</span>
-                <span className="text-white font-semibold">+324.7 MBD</span>
+                <span className="text-white font-semibold">+{earnings.total} MBD</span>
               </div>
               
               <Separator className="bg-white/10" />
               
-              <Button className="w-full bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700">
+              <Button 
+                className="w-full bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700"
+                onClick={handleClaimRewards}
+                disabled={earnings.today === 0}
+              >
                 Claim Rewards
               </Button>
             </div>
@@ -191,7 +252,11 @@ const DataMining = () => {
               </div>
             </div>
             
-            <Button variant="outline" className="w-full mt-4 border-white/20 text-white hover:bg-white/10">
+            <Button 
+              variant="outline" 
+              className="w-full mt-4 border-white/20 text-white hover:bg-white/10"
+              onClick={handleViewAllProofs}
+            >
               <Eye className="w-4 h-4 mr-2" />
               View All Proofs
             </Button>
@@ -206,12 +271,20 @@ const DataMining = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+            <Button 
+              variant="outline" 
+              className="border-white/20 text-white hover:bg-white/10"
+              onClick={handleViewTerms}
+            >
               <FileText className="w-4 h-4 mr-2" />
               DAO Terms & Conditions
             </Button>
             
-            <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+            <Button 
+              variant="outline" 
+              className="border-white/20 text-white hover:bg-white/10"
+              onClick={handleViewDisclosure}
+            >
               <Shield className="w-4 h-4 mr-2" />
               Data Buyer Disclosure
             </Button>

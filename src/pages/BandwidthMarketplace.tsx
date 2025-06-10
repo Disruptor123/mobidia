@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
 import Navbar from '../components/Navbar';
 
 const BandwidthMarketplace = () => {
@@ -12,22 +13,94 @@ const BandwidthMarketplace = () => {
   const [sellAmount, setSellAmount] = useState('');
   const [sellPrice, setSellPrice] = useState('');
   const [sellDuration, setSellDuration] = useState('');
-
-  const activeListings = [
+  const [gbBalance, setGbBalance] = useState({ available: 15.2, listed: 9.0, reserved: 2.0 });
+  const [activeListings, setActiveListings] = useState([
     { id: 1, amount: '5.2 GB', price: '12 MBD/GB', duration: '7 days', status: 'Active' },
     { id: 2, amount: '3.8 GB', price: '15 MBD/GB', duration: '3 days', status: 'Active' },
-  ];
-
-  const incomingOffers = [
+  ]);
+  const [incomingOffers, setIncomingOffers] = useState([
     { id: 1, buyer: '0x1234...5678', amount: '2.0 GB', offer: '25 MBD', duration: '1 day' },
     { id: 2, buyer: '0x9876...5432', amount: '4.5 GB', offer: '60 MBD', duration: '5 days' },
-  ];
+  ]);
+  const { toast } = useToast();
 
   const availableOffers = [
     { id: 1, seller: '0xabcd...efgh', amount: '10.0 GB', price: '10 MBD/GB', duration: '14 days', rating: 4.8 },
     { id: 2, seller: '0x5678...1234', amount: '7.5 GB', price: '13 MBD/GB', duration: '7 days', rating: 4.9 },
     { id: 3, seller: '0x9999...8888', amount: '15.2 GB', price: '9 MBD/GB', duration: '30 days', rating: 4.7 },
   ];
+
+  const handleCreateListing = () => {
+    if (!sellAmount || !sellPrice || !sellDuration) {
+      toast({
+        title: "Error",
+        description: "Please fill in all fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const newListing = {
+      id: activeListings.length + 1,
+      amount: `${sellAmount} GB`,
+      price: `${sellPrice} MBD/GB`,
+      duration: `${sellDuration} days`,
+      status: 'Active'
+    };
+
+    setActiveListings([...activeListings, newListing]);
+    setGbBalance(prev => ({
+      ...prev,
+      available: prev.available - parseFloat(sellAmount),
+      listed: prev.listed + parseFloat(sellAmount)
+    }));
+
+    setSellAmount('');
+    setSellPrice('');
+    setSellDuration('');
+    setShowSellForm(false);
+
+    toast({
+      title: "Listing Created",
+      description: `Successfully listed ${sellAmount} GB for ${sellPrice} MBD/GB`,
+    });
+  };
+
+  const handleManageListing = (listingId: number) => {
+    toast({
+      title: "Manage Listing",
+      description: `Managing listing #${listingId}`,
+    });
+  };
+
+  const handleAcceptOffer = (offerId: number) => {
+    const offer = incomingOffers.find(o => o.id === offerId);
+    if (offer) {
+      setIncomingOffers(incomingOffers.filter(o => o.id !== offerId));
+      toast({
+        title: "Offer Accepted",
+        description: `Accepted offer for ${offer.amount} from ${offer.buyer}`,
+      });
+    }
+  };
+
+  const handleDeclineOffer = (offerId: number) => {
+    const offer = incomingOffers.find(o => o.id === offerId);
+    if (offer) {
+      setIncomingOffers(incomingOffers.filter(o => o.id !== offerId));
+      toast({
+        title: "Offer Declined",
+        description: `Declined offer from ${offer.buyer}`,
+      });
+    }
+  };
+
+  const handleBuyBandwidth = (offer: any) => {
+    toast({
+      title: "Purchase Initiated",
+      description: `Purchasing ${offer.amount} from ${offer.seller}`,
+    });
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -52,15 +125,15 @@ const BandwidthMarketplace = () => {
                 <div className="space-y-3">
                   <div className="flex justify-between text-white/80">
                     <span>Available:</span>
-                    <span className="text-green-400 font-semibold">15.2 GB</span>
+                    <span className="text-green-400 font-semibold">{gbBalance.available} GB</span>
                   </div>
                   <div className="flex justify-between text-white/80">
                     <span>Listed:</span>
-                    <span className="text-blue-400 font-semibold">9.0 GB</span>
+                    <span className="text-blue-400 font-semibold">{gbBalance.listed} GB</span>
                   </div>
                   <div className="flex justify-between text-white/80">
                     <span>Reserved:</span>
-                    <span className="text-orange-400 font-semibold">2.0 GB</span>
+                    <span className="text-orange-400 font-semibold">{gbBalance.reserved} GB</span>
                   </div>
                 </div>
                 <Button 
@@ -118,7 +191,10 @@ const BandwidthMarketplace = () => {
                       • Escrow: Auto-release on completion
                     </div>
                   </div>
-                  <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-600">
+                  <Button 
+                    onClick={handleCreateListing}
+                    className="w-full bg-gradient-to-r from-blue-500 to-purple-600"
+                  >
                     Create Listing
                   </Button>
                 </CardContent>
@@ -165,7 +241,12 @@ const BandwidthMarketplace = () => {
                         </div>
                         <div className="flex items-center gap-2">
                           <span className="text-green-400 text-sm">{listing.status}</span>
-                          <Button size="sm" variant="outline" className="border-white/20 text-white/80">
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="border-white/20 text-white/80"
+                            onClick={() => handleManageListing(listing.id)}
+                          >
                             Manage
                           </Button>
                         </div>
@@ -193,10 +274,19 @@ const BandwidthMarketplace = () => {
                           </div>
                         </div>
                         <div className="flex gap-2">
-                          <Button size="sm" className="bg-green-500 hover:bg-green-600">
+                          <Button 
+                            size="sm" 
+                            className="bg-green-500 hover:bg-green-600"
+                            onClick={() => handleAcceptOffer(offer.id)}
+                          >
                             Accept
                           </Button>
-                          <Button size="sm" variant="outline" className="border-white/20 text-white/80">
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="border-white/20 text-white/80"
+                            onClick={() => handleDeclineOffer(offer.id)}
+                          >
                             Decline
                           </Button>
                         </div>
@@ -235,7 +325,10 @@ const BandwidthMarketplace = () => {
                             </span>
                           </div>
                         </div>
-                        <Button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700">
+                        <Button 
+                          className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+                          onClick={() => handleBuyBandwidth(offer)}
+                        >
                           <ArrowUpRight className="w-4 h-4 mr-1" />
                           Buy
                         </Button>
