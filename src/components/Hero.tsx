@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ArrowRight, Zap, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -55,24 +56,8 @@ const Hero = () => {
           </Button>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto animate-fade-in" style={{animationDelay: '0.4s'}}>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-white mb-2">$2.5M+</div>
-            <div className="text-white/70">Total Bandwidth Traded</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-white mb-2">15K+</div>
-            <div className="text-white/70">Active Data Miners</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-white mb-2">50TB+</div>
-            <div className="text-white/70">Data Processed Daily</div>
-          </div>
-        </div>
-
         {/* Trust Indicators */}
-        <div className="flex items-center justify-center gap-6 mt-12 animate-fade-in" style={{animationDelay: '0.5s'}}>
+        <div className="flex items-center justify-center gap-6 mt-12 animate-fade-in" style={{animationDelay: '0.4s'}}>
           <div className="flex items-center gap-2 text-white/60">
             <Shield className="w-5 h-5 text-green-400" />
             <span>ZK-Proof Security</span>

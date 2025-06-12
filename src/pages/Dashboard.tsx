@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Wifi, TrendingUp, Coins, Users, Play, Pause, ArrowUpRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,11 +7,11 @@ import { useToast } from '@/hooks/use-toast';
 import Navbar from '../components/Navbar';
 
 const Dashboard = () => {
-  const [isMiningActive, setIsMiningActive] = useState(true);
-  const [zkMiningEnabled, setZkMiningEnabled] = useState(true);
-  const [bandwidthBalance, setBandwidthBalance] = useState({ unused: 15.2, used: 8.8, tradable: 12.0 });
-  const [tokenBalance, setTokenBalance] = useState(1247);
-  const [weeklyEarnings, setWeeklyEarnings] = useState(142);
+  const [isMiningActive, setIsMiningActive] = useState(false);
+  const [zkMiningEnabled, setZkMiningEnabled] = useState(false);
+  const [bandwidthBalance, setBandwidthBalance] = useState({ unused: 0, used: 0, tradable: 0 });
+  const [tokenBalance, setTokenBalance] = useState(0);
+  const [weeklyEarnings, setWeeklyEarnings] = useState(0);
   const { toast } = useToast();
 
   const handleSellLendBandwidth = () => {
@@ -23,6 +24,7 @@ const Dashboard = () => {
 
   const handleToggleMining = () => {
     setIsMiningActive(!isMiningActive);
+    setZkMiningEnabled(!isMiningActive);
     toast({
       title: isMiningActive ? "Mining Stopped" : "Mining Started",
       description: isMiningActive ? "ZK mining has been paused" : "ZK mining is now active",
@@ -32,6 +34,7 @@ const Dashboard = () => {
   const handleClaimRewards = () => {
     const rewardAmount = 23;
     setTokenBalance(prev => prev + rewardAmount);
+    setWeeklyEarnings(prev => prev + rewardAmount);
     toast({
       title: "Rewards Claimed!",
       description: `Successfully claimed ${rewardAmount} MBD tokens`,
@@ -156,7 +159,7 @@ const Dashboard = () => {
               <div className="space-y-2">
                 <div className="flex justify-between text-white/80 text-sm">
                   <span>Daily:</span>
-                  <span className="text-green-400">+23 MBD</span>
+                  <span className="text-green-400">+0 MBD</span>
                 </div>
                 <div className="flex justify-between text-white/80 text-sm">
                   <span>Weekly:</span>
@@ -164,12 +167,13 @@ const Dashboard = () => {
                 </div>
                 <div className="flex justify-between text-white/80 text-sm">
                   <span>Monthly:</span>
-                  <span className="text-green-400">+589 MBD</span>
+                  <span className="text-green-400">+0 MBD</span>
                 </div>
               </div>
               <Button 
                 onClick={handleClaimRewards}
                 className="w-full bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700"
+                disabled={!isMiningActive}
               >
                 Claim Rewards
               </Button>
