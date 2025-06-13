@@ -43,16 +43,16 @@ const Hero = () => {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 animate-fade-in" style={{animationDelay: '0.3s'}}>
           {/* Launch App Button - TODO: Configure wallet integration */}
-          <Button 
+          {/* <Button 
             onClick={handleLaunchApp}
             size="lg" 
             className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 px-8 py-4 text-lg font-semibold"
           >
             Launch App
             <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
-          <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg">
-            Learn More
+          </Button> */}
+          <Button size="lg" variant="outline" className="border-white/30 hover:bg-white/10 px-8 py-4 text-lg">
+            <a href="#data-mining">Learn More</a>
           </Button>
         </div>
 
