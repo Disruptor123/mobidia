@@ -64,13 +64,6 @@ const Dashboard = () => {
             <h1 className="text-3xl font-bold text-white mb-2 animate-fade-in">Dashboard</h1>
             <p className="text-white/70 animate-fade-in" style={{animationDelay: '0.1s'}}>Manage your bandwidth and earnings</p>
           </div>
-          {/* Connect Wallet Button - TODO: Configure wallet integration */}
-          <Button 
-            onClick={handleConnectWallet}
-            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
-          >
-            Connect Wallet
-          </Button>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

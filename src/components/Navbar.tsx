@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X, Wifi, Shield, TrendingUp, User, Clock, Home } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Link, useLocation } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
+import { useAccount } from 'wagmi';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { address, isConnecting} = useAccount();
+    useEffect(() => {
+        if (address && !isConnecting) {
+          navigate('/dashboard');
+        }
+      }, [address, isConnecting, history]);
 
   const navItems = [
     { name: 'Dashboard', href: '/dashboard', icon: Home },
@@ -14,13 +21,6 @@ const Navbar = () => {
     { name: 'Profile', href: '/profile', icon: User },
     { name: 'DAO Governance', href: '/dao-governance', icon: Clock },
   ];
-
-  // TODO: Configure wallet connection logic here
-  const handleConnectWallet = () => {
-    console.log("Connect Wallet clicked - configure wallet integration here");
-    // Add your wallet connection logic here (e.g., MetaMask, WalletConnect, etc.)
-  };
-
   return (
     <nav className="bg-black/20 backdrop-blur-md border-b border-white/10 sticky top-0 z-50">
       <div className="container mx-auto px-4">
@@ -60,12 +60,7 @@ const Navbar = () => {
 
           {/* Connect Wallet Button - TODO: Configure wallet integration */}
           <div className="hidden md:block">
-            <Button 
-              onClick={handleConnectWallet}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0"
-            >
-              Connect Wallet
-            </Button>
+            <button onClick={() => navigate}><w3m-button /></button>  
           </div>
 
           {/* Mobile Menu Button */}
@@ -101,12 +96,8 @@ const Navbar = () => {
                 );
               })}
               {/* Mobile Connect Wallet Button - TODO: Configure wallet integration */}
-              <Button 
-                onClick={handleConnectWallet}
-                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 mt-4"
-              >
-                Connect Wallet
-              </Button>
+              <button onClick={() => navigate('/dashboard')}><w3m-button /></button>  
+            
             </div>
           </div>
         )}

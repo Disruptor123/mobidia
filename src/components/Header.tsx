@@ -1,11 +1,18 @@
-
-import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAccount } from 'wagmi';
+import React, { useState, useEffect } from 'react';
 import { Menu, X, Wifi, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+    const navigate = useNavigate();
+    const { address, isConnecting} = useAccount();
+      useEffect(() => {
+          if (address && !isConnecting) {
+            navigate('/dashboard');
+          }
+        }, [address, isConnecting, history]);
   return (
     <header className="relative z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
       <div className="container mx-auto px-4 py-4">
@@ -30,9 +37,7 @@ const Header = () => {
 
           {/* Connect Wallet Button */}
           <div className="hidden md:block animate-fade-in" style={{animationDelay: '0.5s'}}>
-            <Button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0">
-              Connect Wallet
-            </Button>
+            <button onClick={() => navigate}><w3m-button /></button>  
           </div>
 
           {/* Mobile Menu Button */}
@@ -52,9 +57,7 @@ const Header = () => {
               <a href="#features" className="text-white/80 hover:text-white transition-colors animate-fade-in" style={{animationDelay: '0.1s'}}>Features</a>
               <a href="#data-mining" className="text-white/80 hover:text-white transition-colors animate-fade-in" style={{animationDelay: '0.2s'}}>Data Mining</a>
               <a href="#tokenomics" className="text-white/80 hover:text-white transition-colors animate-fade-in" style={{animationDelay: '0.3s'}}>Tokenomics</a>
-              <Button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 w-full mt-4 animate-fade-in" style={{animationDelay: '0.4s'}}>
-                Connect Wallet
-              </Button>
+              <button onClick={() => navigate}><w3m-button /></button>  
             </nav>
           </div>
         )}
