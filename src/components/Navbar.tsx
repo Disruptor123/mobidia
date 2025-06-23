@@ -9,11 +9,10 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { address, isConnecting} = useAccount();
     useEffect(() => {
-        if (address && !isConnecting) {
-          navigate('/dashboard');
-        }
-      }, [address, isConnecting, history]);
-
+        if (address && !isConnecting && location.pathname === '/') {
+      navigate('/dashboard');
+    }
+  }, [address, isConnecting, location.pathname, navigate]);
   const navItems = [
     { name: 'Dashboard', href: '/dashboard', icon: Home },
     { name: 'Bandwidth Marketplace', href: '/marketplace', icon: TrendingUp },
